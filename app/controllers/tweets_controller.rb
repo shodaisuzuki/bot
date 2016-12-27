@@ -11,12 +11,13 @@ class TweetsController < ApplicationController
 	end
 
 
-
-    #画像アップロドできん
+    #centosの時間合わせないと失敗する
 	def post
 	  tweet = Tweet.order('rand()').first
-	  status = tweet.text
-	  @client.update(status)
+      status = tweet.text
+      #ここのパスの指定の仕方がうーん、、
+	  media = open(ENV['HOME']+'/rails/bot/public/images/'+tweet.image)
+      @client.update_with_media(status, media)
 	  redirect_to :root
 	end
 
